@@ -3,15 +3,20 @@
 from audiolib import autocorr
 from severlib import send
 
+import sounddevice as sd
 import pyaudio
 import time
 import numpy as np
 
+def mixerlist():
+    items = sd.query_devices()
+    names = []
+    for e in items:
+        names.append(e['name'])
+    return names
 
 class listener():
-    def __init__(self,length):
-        
-        
+    def __init__(self,length, mixer):
         self.CHUNK = length*44100
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 2
@@ -25,8 +30,7 @@ class listener():
                 rate=self.RATE,
                 input=True,
                 frames_per_buffer=self.CHUNK,
-                input_device_index=12)
-
+                input_device_index=mixer)
     
     def record(self):
         print("* Enregistrement commence")
@@ -41,9 +45,7 @@ class listener():
         self.stream.close()
         self.p.terminate()
 
-a = listener(5)
-a.record()
-a.end()
+
 
 
 
