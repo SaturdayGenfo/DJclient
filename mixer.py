@@ -36,15 +36,15 @@ class Ui_Dialog(object):
         
     def buttonclicked(self):
         global mixer
-        print("selected item : ", self.listView.currentRow())
+        #print("selected item : ", self.listView.currentRow())
         mixer = self.listView.currentRow()
         self.ref.accept()
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Choix de mixer"))
-        self.pushButton.setText(_translate("Dialog", "Select"))
-        self.label.setText(_translate("Dialog", "Available Mixers (Choose a stereo mixer ): "))
+        self.pushButton.setText(_translate("Dialog", "Enregistrer"))
+        self.label.setText(_translate("Dialog", "Mixeurs disponibles (Choisir un stereo mixeur): "))
     
     
 
