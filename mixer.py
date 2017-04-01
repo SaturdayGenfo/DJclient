@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mixerchoice.ui'
-#
-# Created by: PyQt5 UI code generator 5.8.2
-#
-# WARNING! All changes made in this file will be lost!
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from untitled1 import mixerlist
+from untitled1 import mixerlist, listener
 
-
+mixer = 0
         
 class Ui_Dialog(object):
     
-        
 
     def setupUi(self, Dialog):
+        self.ref = Dialog
         Dialog.setObjectName("Dialog")
         Dialog.resize(401, 279)
         self.pushButton = QtWidgets.QPushButton(Dialog)
@@ -39,8 +35,10 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
         
     def buttonclicked(self):
+        global mixer
         print("selected item : ", self.listView.currentRow())
-        
+        mixer = self.listView.currentRow()
+        self.ref.accept()
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -57,6 +55,9 @@ if __name__ == "__main__":
     ui = Ui_Dialog()
     ui.setupUi(Dialog)
     Dialog.show()
-    print("Testing")
+    if Dialog.exec_() == QtWidgets.QDialog.Accepted:
+        listen = listener(5, mixer)
+        listen.record()
+        listen.end()
     sys.exit(app.exec_())
 
