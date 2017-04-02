@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from audiolib import autocorr
-from severlib import send
+
 
 import sounddevice as sd
 import pyaudio
@@ -21,7 +21,7 @@ class listener():
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 2
         self.RATE = 44100
-        self.RECORD_SECONDS = 30
+        self.RECORD_SECONDS = 300
 
         self.p = pyaudio.PyAudio()
 
@@ -31,7 +31,7 @@ class listener():
                 input=True,
                 frames_per_buffer=self.CHUNK,
                 input_device_index=mixer)
-        self.f = open("D.txt", 'w')
+        
     
     def record(self):
         #print("* Enregistrement commence")
@@ -39,12 +39,14 @@ class listener():
             data = self.stream.read(self.CHUNK)
             nparr = np.fromstring(data, dtype=np.int16)
             t, bpm = int(round(time.time()*1000, 0)), autocorr(nparr, self.RATE, 32)
-            self.f.write(str(t) + " ".join([str(round(b, 0)) for b in bpm]) + '\n')
+            self.f = open("D.txt", 'a')
+            self.f.write(str(int(round(time.time(), 0)) % 100000) + " ".join([str(round(b, 0)) for b in bpm]) + '\n')
+            self.f.close()
     def end(self):
         
         self.stream.close()
         self.p.terminate()
-        self.f.close()
+        
         #print("* Termine")
 
 

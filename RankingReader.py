@@ -14,6 +14,6 @@ class RankingReader():
         f.close()
         ranking = []
         for i, l in enumerate(lines):
-            ranking.append(str(i+1)+". "+ l.strip("\n"))
+            ranking.append(str(i+1)+". <b>"+ l.strip("\n")+ "</b>")
         return ranking
         

@@ -56,7 +56,7 @@ if __name__ == "__main__":
     ui.setupUi(Dialog)
     Dialog.show()
     if Dialog.exec_() == QtWidgets.QDialog.Accepted:
-        listen = listener(5, mixer)
+        listen = listener(3, mixer)
         listen.record()
         listen.end()
     sys.exit(app.exec_())
