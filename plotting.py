@@ -21,6 +21,8 @@ from numpy import arange, sin, pi, random
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
+from RankingReader import RankingReader
+
 progname = os.path.basename(sys.argv[0])
 progversion = "0.1"
 
@@ -96,9 +98,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.ranking = QtWidgets.QListWidget(self.main_widget)
         
         self.ranking.setGeometry(QtCore.QRect(20, 50, 361, 161))
+        
         timer = QtCore.QTimer(self)
         timer.timeout.connect(self.update_ranking)
-        timer.start(1000)
+        timer.start(5000)
         
         dc = MyDynamicMplCanvas(self.main_widget, width=5, height=4, dpi=100)
         
@@ -106,7 +109,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         l.addWidget(self.ranking)
         l.addWidget(dc)
         
-        
+        self.rreader = RankingReader("ranking.txt")
+        self.update_ranking()
 
         self.main_widget.setFocus()
         self.setCentralWidget(self.main_widget)
@@ -114,8 +118,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         
     
     def update_ranking(self):
-        alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        rn = [alph[i] for i in random.choice([k for k in range(26)], 5)]
+        rn = self.rreader.read()
         self.ranking.clear()
         for letter in rn:
            item = QtWidgets.QListWidgetItem(letter)
