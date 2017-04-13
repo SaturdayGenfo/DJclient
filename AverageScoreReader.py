@@ -19,7 +19,7 @@ class ScoreReader():
         S = []
         for line in lines[-n:]:
             l = line.split(' ')
-            t, s = float(l[0][:-2]), int(l[1][:-2])
+            t, s = float(l[0]), float(l[1])
             T.append(t)
             S.append(s)
         return T,S

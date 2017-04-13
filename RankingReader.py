@@ -12,8 +12,11 @@ class RankingReader():
         f = open(self.filename, 'r')
         lines = f.readlines()
         f.close()
-        ranking = []
+        style = "<head><style> table { margin-top: 42px; color:rgb(67, 173, 165);} td {padding : 9px; } </style></head>"
+        ranking = [style, '<table>']
         for i, l in enumerate(lines):
-            ranking.append(str(i+1)+". <b>"+ l.strip("\n")+ "</b>")
+            user, sc = l.strip("\n").split(' ')
+            ranking.append("<tr>" + "<td>"+str(i+1)+ ". </td>"+"<td> <b>"+ user + "</b>"+ "</td> <td>" + sc + "</td>"+  "</tr>")
+        ranking.append("</table>")
         return ranking
         
