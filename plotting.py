@@ -59,11 +59,11 @@ class MyDynamicMplCanvas(MyMplCanvas):
         MyMplCanvas.__init__(self, *args, **kwargs)
         timer = QtCore.QTimer(self)
         timer.timeout.connect(self.update_figure)
-        timer.start(5000)
+        timer.start(4000)
         self.axes.get_yaxis().set_visible(False)
 
     def compute_initial_figure(self):
-        T, S = self.scorereader.read(20)
+        T, S = self.scorereader.read(100)
         S = [0] + S + [0]
         self.axes.set_xlim(1, len(S) - 2)
         self.axes.plot([i for i in range(len(S))], S, color=(237.0/255, 28.0/255, 36.0/255))
@@ -73,7 +73,7 @@ class MyDynamicMplCanvas(MyMplCanvas):
 
     def update_figure(self):
         # Build a list of 4 random integers between 0 and 10 (both inclusive)
-        T, S = self.scorereader.read(20)
+        T, S = self.scorereader.read(100)
         self.axes.cla()
         S = [0] + S + [0]
         self.axes.plot([i for i in range(len(S))], S, color=(237.0/255, 28.0/255, 36.0/255))
@@ -104,7 +104,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         l = QtWidgets.QHBoxLayout(self.main_widget)
         
         self.logo = QtWidgets.QLabel(self.main_widget)
-        self.logo.setPixmap(QtGui.QPixmap("logo.png"))
+        self.logo.setPixmap(QtGui.QPixmap("logo2.png"))
         self.logo.setAlignment(QtCore.Qt.AlignCenter)
         
         self.ranking = QtWidgets.QTextEdit(self.main_widget)
